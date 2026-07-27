@@ -2,6 +2,7 @@
 #SBATCH --account=pawsey1132
 #SBATCH --partition=work
 #SBATCH --job-name=fastqc_e_rankini
+#SBATCH --out=pop_gen/slurm/raw_fastq_slurm-%j.out
 #SBATCH --cpus-per-task=48
 #SBATCH --ntasks=1
 #SBATCH --mem=80G
@@ -36,5 +37,4 @@ singularity exec \
 
 # create file of read names
 # for running trimmomatic as an array job instead of for-looping
-ls $RAW_READS_DIR/*.fastq.gz > ${RAW_READS_DIR}/${SPECIES}_filenames.txt
-
+ls $RAW_READS_DIR/*R1.fastq.gz > ${RAW_READS_DIR}/${SPECIES}_filenames.txt

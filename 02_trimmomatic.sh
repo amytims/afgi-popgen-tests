@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=10G
 #SBATCH --time=12:00:00
-#SBATCH --array=1-240:2
+#SBATCH --array=1-120
 #SBATCH --out=pop_gen/slurm/trimmomatic_slurm-%A_%a.out
 
 ### --array should be 1-[num files]:2 to only start with each _R1 file
