@@ -12,6 +12,7 @@
 ### --array should be 1-[num files]:2 to only start with each _R1 file
 
 module load trimmomatic/0.39--hdfd78af_2
+# trimmomatic 0.40 has brought in parallel compression, but old trimmomatic + pigz also worked in <30 mins
 
 SPECIES=e_rankini
 
