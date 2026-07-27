@@ -3,10 +3,10 @@
 #SBATCH --partition=work
 #SBATCH --job-name=multiqc_trim_e_rankini
 #SBATCH --out=pop_gen/slurm/multiqc_trim_e_rankini_slurm-%j.out
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=48
 #SBATCH --ntasks=1
-#SBATCH --mem=7G
-#SBATCH --time=1:00:00
+#SBATCH --mem=80G
+#SBATCH --time=12:00:00
 
 ### NOTE: this does one sample per thread at a time
 ### e.g., 6 threads = 6 processed in one go
