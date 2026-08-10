@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH --job-name=bcftools_mpileup
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=72g
+#SBATCH --time=24:00:00
+#SBATCH --account=pawsey1132
+#SBATCH --partition=work
+#SBATCH --array=4,5,10,11
+#SBATCH --out=pop_gen/slurm/bcftools_mpileup_slurm%A-%a.out
+
+# Specify the path to the config file
+config=regions.txt
+
+#echo $config
+#for SLURM_ARRAY_TASK_ID in {1..10}; do
+
+echo $SLURM_ARRAY_TASK_ID
+
+REGIONS=$(awk -F"\t" -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $0}' $config)
+
+echo $REGIONS
+
+# path to reference
+SPECIES=e_rankini
+
+REF_DIR=/home/atims/pop_gen/pop_gen/reference_genome/$SPECIES
+REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+MKDUP=/home/atims/pop_gen/pop_gen/mkdup/$SPECIES
+VARIANTS=/home/atims/pop_gen/pop_gen/variant_calling/$SPECIES
+
+mkdir $VARIANTS -p
+
+# load required modules
+module load samtools/1.15--h3843a85_0
+module load bcftools/1.15--haf5b3da_0
+
+# run variant calling on all mkdup bam files in path
+bcftools mpileup -Ou -Q 30 -q 30 -f ${REF_DIR}/${REFERENCE} -r "${REGIONS}" ${MKDUP}/*.marked_duplicates.bam | \
+	bcftools call --ploidy 1 -v -m > ${VARIANTS}/markdup_${SLURM_ARRAY_TASK_ID}.vcf
+
+## option meanings
+#-Ou output type uncompressed bcf - leave uncompressed when piping to other commands
+#-f fasta-ref - faidx-index reference file
+#-r Comma-separated list of regions/-R regions file - three column tab-delimited format NAME|BEG|END
+#--ploidy - ploidy of reference, I assume? 1 as it's a haploid - single assembly
+#-v - output variant sites only
+#-m - multiallelic calling model
