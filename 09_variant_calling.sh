@@ -39,12 +39,11 @@ module load bcftools/1.15--haf5b3da_0
 
 # run variant calling on all mkdup bam files in path
 bcftools mpileup -Ou -Q 30 -q 30 -a AD,DP,SP -f ${REF_DIR}/${REFERENCE} -r "${REGIONS}" ${MKDUP}/*.marked_duplicates.bam | \
-	bcftools call -v -m > ${VARIANTS}/markdup_${SLURM_ARRAY_TASK_ID}.vcf
+	bcftools call -v -m > ${VARIANTS}/markdup_$(printf "%02d" ${SLURM_ARRAY_TASK_ID}).vcf
 
 ## option meanings
 #-Ou output type uncompressed bcf - leave uncompressed when piping to other commands
 #-f fasta-ref - faidx-index reference file
 #-r Comma-separated list of regions/-R regions file - three column tab-delimited format NAME|BEG|END
-#--ploidy - ploidy of reference, I assume? 1 as it's a haploid - single assembly
 #-v - output variant sites only
 #-m - multiallelic calling model
