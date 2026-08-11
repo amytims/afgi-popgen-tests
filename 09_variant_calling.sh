@@ -8,7 +8,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --account=pawsey1132
 #SBATCH --partition=work
-#SBATCH --array=4,5,10,11
+#SBATCH --array=1-24
 #SBATCH --out=pop_gen/slurm/bcftools_mpileup_slurm%A-%a.out
 
 # Specify the path to the config file
@@ -38,8 +38,8 @@ module load samtools/1.15--h3843a85_0
 module load bcftools/1.15--haf5b3da_0
 
 # run variant calling on all mkdup bam files in path
-bcftools mpileup -Ou -Q 30 -q 30 -f ${REF_DIR}/${REFERENCE} -r "${REGIONS}" ${MKDUP}/*.marked_duplicates.bam | \
-	bcftools call --ploidy 1 -v -m > ${VARIANTS}/markdup_${SLURM_ARRAY_TASK_ID}.vcf
+bcftools mpileup -Ou -Q 30 -q 30 -a AD,DP,SP -f ${REF_DIR}/${REFERENCE} -r "${REGIONS}" ${MKDUP}/*.marked_duplicates.bam | \
+	bcftools call -v -m > ${VARIANTS}/markdup_${SLURM_ARRAY_TASK_ID}.vcf
 
 ## option meanings
 #-Ou output type uncompressed bcf - leave uncompressed when piping to other commands
