@@ -29,7 +29,7 @@ SPECIES=e_rankini
 REF_DIR=/home/atims/pop_gen/pop_gen/reference_genome/$SPECIES
 REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
 MKDUP=/home/atims/pop_gen/pop_gen/mkdup/$SPECIES
-VARIANTS=/home/atims/pop_gen/pop_gen/variant_calling/$SPECIES
+VARIANTS=/home/atims/pop_gen/pop_gen/variant_calling/${SPECIES}_2
 
 mkdir $VARIANTS -p
 
@@ -39,7 +39,7 @@ module load bcftools/1.15--haf5b3da_0
 
 # run variant calling on all mkdup bam files in path
 bcftools mpileup -Ou -Q 30 -q 30 -a AD,DP,SP -f ${REF_DIR}/${REFERENCE} -r "${REGIONS}" ${MKDUP}/*.marked_duplicates.bam | \
-	bcftools call -v -m > ${VARIANTS}/markdup_$(printf "%02d" ${SLURM_ARRAY_TASK_ID}).vcf
+	bcftools call --threads 12 -m -f GQ,GP > ${VARIANTS}/markdup_$(printf "%02d" ${SLURM_ARRAY_TASK_ID}).vcf
 
 ## option meanings
 #-Ou output type uncompressed bcf - leave uncompressed when piping to other commands
