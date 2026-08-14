@@ -21,4 +21,4 @@ python3 -m pip install binpacking
 python3 -m pip install argparse
 python3 -m pip install pathlib
 
-python3 get_regions.py ${REF_DIR}/${REFERENCE}.fai > regions.txt
+python3 get_regions.py ${REF_DIR}/${REFERENCE}.fai > ${SPECIES}_regions.txt
