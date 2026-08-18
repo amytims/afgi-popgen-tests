@@ -6,13 +6,13 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=48G
 #SBATCH --time=6:00:00
-#SBATCH --array=4-60%10
+#SBATCH --array=1-64
 #SBATCH --out=pop_gen/slurm/post-processing_slurm%A-%a.out
 
 module load samtools/1.15--h3843a85_0
 module load gatk4/4.2.5.0--hdfd78af_0
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 #ALIGNMENTS=/home/atims/pop_gen/pop_gen/alignments
 SORTED_ALN=/home/atims/pop_gen/pop_gen/sorted_aln/$SPECIES
 MKDUP=/home/atims/pop_gen/pop_gen/mkdup/$SPECIES

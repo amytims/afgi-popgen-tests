@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=pawsey1132
 #SBATCH --partition=work
-#SBATCH --job-name=fastqc_e_rankini
+#SBATCH --job-name=fastqc_l_punctulatus
 #SBATCH --out=pop_gen/slurm/raw_fastq_slurm-%j.out
 #SBATCH --cpus-per-task=48
 #SBATCH --ntasks=1
@@ -12,7 +12,7 @@
 ### e.g., 6 threads = 6 processed in one go
 ### Up the number of threads when you have more files to process
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 # raw reads for the species should already be in this directory
 RAW_READS_DIR=/home/atims/pop_gen/pop_gen/raw_reads/${SPECIES}
@@ -37,4 +37,4 @@ singularity exec \
 
 # create file of read names
 # for running trimmomatic as an array job instead of for-looping
-ls $RAW_READS_DIR/*R1.fastq.gz > ${RAW_READS_DIR}/${SPECIES}_filenames.txt
+#ls $RAW_READS_DIR/*R1.fastq.gz > ${RAW_READS_DIR}/${SPECIES}_filenames.txt

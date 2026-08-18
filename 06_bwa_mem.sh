@@ -5,17 +5,17 @@
 #SBATCH --cpus-per-task=12
 #SBATCH --ntasks=1
 #SBATCH --mem=21GB
-#SBATCH --time=4:00:00
-#SBATCH --array=7-60
+#SBATCH --time=8:00:00
+#SBATCH --array=12,17
 #SBATCH --out=pop_gen/slurm/bwa-mem_slurm-%A_%a.out
 
 # get config file with
 # ls ${READS_DIR}/*trim_pe.fastq > merged_filenames.txt
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 MERGED_DIR=/home/atims/pop_gen/pop_gen/merged_reads/${SPECIES}
-REFERENCE=/scratch/pawsey1132/atims/pop_gen/reference_genome/e_rankini/e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+REFERENCE=/scratch/pawsey1132/atims/pop_gen/reference_genome/l_punctulatus/l_punctulatus_OG2146_v260414.hic1.3.curated.hap1.chr_level.fa
 SORTED_ALN=/home/atims/pop_gen/pop_gen/sorted_aln/$SPECIES
 
 #config=$MERGED_DIR/${SPECIES}_merged_filenames.txt

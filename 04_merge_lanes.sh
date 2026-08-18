@@ -1,23 +1,23 @@
 #!/bin/bash
 #SBATCH --account=pawsey1132
 #SBATCH --partition=work
-#SBATCH --job-name=merge_lanes_e_rankini
+#SBATCH --job-name=merge_lanes_l_punctulatus
 #SBATCH --cpus-per-task=4
 #SBATCH --ntasks=1
 #SBATCH --mem=7G
 #SBATCH --time=4:00:00
-#SBATCH --array=1-60
+#SBATCH --array=1-64
 #SBATCH --out=pop_gen/slurm/merge_lanes_slurm-%A_%a.out
 
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 READS_DIR=/home/atims/pop_gen/pop_gen/trimmomatic_output/${SPECIES}
 MERGED_DIR=/home/atims/pop_gen/pop_gen/merged_reads/${SPECIES}
 
 mkdir -p $MERGED_DIR
 
-file=$(ls pop_gen/trimmomatic_output/e_rankini/*.trim_pe.fastq.gz | xargs -n 1 basename --suffix=.trim_pe.fastq.gz | sed -E 's/_L..._R.$//g' | uniq | awk -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $1}')
+file=$(ls ${READS_DIR}/*.trim_pe.fastq.gz | xargs -n 1 basename --suffix=.trim_pe.fastq.gz | sed -E 's/_L..._R.$//g' | uniq | awk -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $1}')
 
 
 #for file in $(ls ${READS_DIR}/*.trim_pe.fastq.gz | xargs -n 1 basename --suffix=.trim_pe.fastq.gz | sed -E 's/_L..._R.$//g' | uniq)

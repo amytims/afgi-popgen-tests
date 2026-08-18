@@ -11,8 +11,10 @@
 #SBATCH --array=1-24
 #SBATCH --out=pop_gen/slurm/bcftools_mpileup_slurm%A-%a.out
 
+SPECIES=l_punctulatus
+
 # Specify the path to the config file
-config=regions.txt
+config=${SPECIES}_regions.txt
 
 #echo $config
 #for SLURM_ARRAY_TASK_ID in {1..10}; do
@@ -24,12 +26,11 @@ REGIONS=$(awk -F"\t" -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $0}' $config)
 echo $REGIONS
 
 # path to reference
-SPECIES=e_rankini
-
 REF_DIR=/home/atims/pop_gen/pop_gen/reference_genome/$SPECIES
-REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+#REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+REFERENCE=l_punctulatus_OG2146_v260414.hic1.3.curated.hap1.chr_level.fa
 MKDUP=/home/atims/pop_gen/pop_gen/mkdup/$SPECIES
-VARIANTS=/home/atims/pop_gen/pop_gen/variant_calling/${SPECIES}_2
+VARIANTS=/home/atims/pop_gen/pop_gen/variant_calling/${SPECIES}
 
 mkdir $VARIANTS -p
 

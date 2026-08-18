@@ -3,10 +3,11 @@
 module load samtools/1.15--h3843a85_0
 module load python/3.11.6
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 REF_DIR=/home/atims/pop_gen/pop_gen/reference_genome/$SPECIES
-REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+#REFERENCE=e_rankini_OG9_v240206.hic1.3.curated.hap1.chr_level.fa
+REFERENCE=l_punctulatus_OG2146_v260414.hic1.3.curated.hap1.chr_level.fa
 VENV=/scratch/pawsey1132/atims/pop_gen/$SPECIES/venv
 
 # index reference fasta

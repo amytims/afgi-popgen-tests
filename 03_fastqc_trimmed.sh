@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=pawsey1132
 #SBATCH --partition=work
-#SBATCH --job-name=multiqc_trim_e_rankini
-#SBATCH --out=pop_gen/slurm/multiqc_trim_e_rankini_slurm-%j.out
+#SBATCH --job-name=multiqc_trim_l_punctulatus
+#SBATCH --out=pop_gen/slurm/multiqc_trim_l_punctulatus_slurm-%j.out
 #SBATCH --cpus-per-task=48
 #SBATCH --ntasks=1
 #SBATCH --mem=80G
@@ -12,7 +12,7 @@
 ### e.g., 6 threads = 6 processed in one go
 ### Up the number of threads when you have more files to process
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 # trimmed input files
 TRIM_DIR=/home/atims/pop_gen/pop_gen/trimmomatic_output/${SPECIES}

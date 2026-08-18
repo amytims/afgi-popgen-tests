@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=10G
 #SBATCH --time=12:00:00
-#SBATCH --array=1-120
+#SBATCH --array=1-128
 #SBATCH --out=pop_gen/slurm/trimmomatic_slurm-%A_%a.out
 
 ### --array should be 1-[num files]:2 to only start with each _R1 file
@@ -14,7 +14,7 @@
 module load trimmomatic/0.39--hdfd78af_2
 # trimmomatic 0.40 has brought in parallel compression, but old trimmomatic + pigz also worked in <30 mins
 
-SPECIES=e_rankini
+SPECIES=l_punctulatus
 
 # where do the input and output files go?
 RAW_READS_DIR=/home/atims/pop_gen/pop_gen/raw_reads/${SPECIES}
@@ -22,12 +22,14 @@ RAW_READS_DIR=/home/atims/pop_gen/pop_gen/raw_reads/${SPECIES}
 TRIM_DIR=/home/atims/pop_gen/pop_gen/trimmomatic_output/${SPECIES}
 
 # filenames file for array job
-config=${RAW_READS_DIR}/${SPECIES}_filenames.txt
+#config=${RAW_READS_DIR}/${SPECIES}_filenames.txt
 
 # create directories for output data
 mkdir -p $TRIM_DIR
 
-FILE1=${RAW_READS_DIR}/$(basename $(awk -F"\t" -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $1}' $config))
+#FILE1=${RAW_READS_DIR}/$(basename $(awk -F"\t" -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $1}' $config))
+
+FILE1=$(ls $RAW_READS_DIR/*R1.fastq.gz | awk -v id="${SLURM_ARRAY_TASK_ID}" 'NR==id {print $1}')
 
 echo $FILE1
 
